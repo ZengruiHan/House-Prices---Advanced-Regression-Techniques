@@ -1,0 +1,2 @@
+experiment,model,features,validation_rmse,notes
+001,median baseline,none,88667.16750592619,first baseline

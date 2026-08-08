@@ -1,2 +1,2 @@
-experiment,model,features,validation_rmse,notes
-001,median baseline,none,88667.16750592619,first baseline
+model,metric,valid_rmse,notes
+ridge,rmse_log,0.146784829890847,alpha=10

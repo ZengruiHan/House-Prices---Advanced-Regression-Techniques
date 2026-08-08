@@ -1,7 +1,6 @@
 from sklearn.model_selection import train_test_split
 from sklearn.dummy import DummyRegressor
-from sklearn.metrics import root_mean_squared_error
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error, mean_squared_error, make_scorer
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import Ridge
@@ -13,6 +12,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def rmsle(y_true, y_pred):
+    y_pred = np.clip(y_pred,1,None)
+    return root_mean_squared_error(np.log1p(y_true), np.log1p(y_pred))
+
+
+rmsle_scorer = make_scorer(rmsle, greater_is_better=False)
+
 
 
 def evaluate_model(model, X, y, cv):
@@ -21,7 +27,7 @@ def evaluate_model(model, X, y, cv):
         X,
         y,
         cv=cv,
-        scoring="neg_root_mean_squared_error",
+        scoring=rmsle_scorer,
         return_train_score=True,
         n_jobs=-1,
     )
